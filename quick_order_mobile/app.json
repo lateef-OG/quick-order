@@ -2,6 +2,12 @@
   "expo": {
     "name": "quick_order_mobile",
     "slug": "quick_order_mobile",
+    "icon": "./src/assets/img/food.png",
+    "splash": {
+      "image": "./src/assets/img/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "plugins": [
       [
         "expo-font",

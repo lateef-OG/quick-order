@@ -1,4 +1,5 @@
 export type RootStackParamList = {
   Home: undefined;
-  Menu: undefined;
+  Menu: { id: string };
+  OrderConfirmation: undefined;
 };

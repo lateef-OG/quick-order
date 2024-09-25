@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import {
   View,
   Text,
@@ -11,8 +11,23 @@ import { colors } from "../../constants/colors";
 import { Body, Caption } from "../../components/Typography/Typography";
 import Feather from "@expo/vector-icons/Feather";
 import { PrimaryButton } from "../../components/Buttons/Buttons";
+import { useOrders } from "../../hooks/useOrders";
+import { OrderItem } from "../../types/order.types";
+import { LoadingScreen } from "../../components/LoadingScreen/LoadingScreen";
 
 export const Checkout = ({ navigation }) => {
+  const {
+    orderItems,
+    orderItemCount,
+    subtotal,
+    tax,
+    serviceFee,
+    total,
+    removeItem,
+    isLoading,
+    placeOrder,
+  } = useOrders();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
@@ -21,44 +36,42 @@ export const Checkout = ({ navigation }) => {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    if (orderItemCount === 0) {
+      navigation.goBack();
+    }
+  }, [orderItemCount]);
+
   return (
     <ScrollView style={styles.container}>
       <Body style={{ fontWeight: "500", marginBottom: 20 }}>Order Summary</Body>
       <View style={{ gap: 16 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View style={{ gap: 4 }}>
-            <Body>Rice & Beans</Body>
-            <Caption>$10.00</Caption>
-          </View>
-          <TouchableOpacity
-            style={{
-              height: 36,
-              width: 36,
-              borderRadius: 20,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Feather name="trash-2" size={18} color={colors.red} />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View style={{ gap: 4 }}>
-            <Body>Jollof Rice</Body>
-            <Caption>$9.99</Caption>
-          </View>
-          <TouchableOpacity
-            style={{
-              height: 32,
-              width: 32,
-              borderRadius: 16,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Feather name="trash-2" size={18} color={colors.red} />
-          </TouchableOpacity>
-        </View>
+        {orderItems.map((item: OrderItem) => {
+          const { menuItemId, name, price } = item;
+          return (
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              key={menuItemId}
+            >
+              <View style={{ gap: 4 }}>
+                <Body>{name}</Body>
+                <Caption>${price}</Caption>
+              </View>
+              <TouchableOpacity
+                style={{
+                  height: 36,
+                  width: 36,
+                  borderRadius: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={() => removeItem(menuItemId)}
+              >
+                <Feather name="trash-2" size={18} color={colors.red} />
+              </TouchableOpacity>
+            </View>
+          );
+        })}
       </View>
       <View
         style={{
@@ -70,26 +83,27 @@ export const Checkout = ({ navigation }) => {
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Body>Sub-total(1 item)</Body>
-          <Body>$19.99</Body>
+          <Body>
+            Sub-total(
+            {`${orderItemCount} ${orderItemCount > 1 ? "items" : "item"}`})
+          </Body>
+          <Body>${subtotal}</Body>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Body>Service Fee</Body>
-          <Body>$1.99</Body>
+          <Body>${serviceFee}</Body>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Body>Tax</Body>
-          <Body>$1.99</Body>
+          <Body>${tax}</Body>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Body style={{ fontWeight: "600" }}>Total</Body>
-          <Body style={{ fontWeight: "600" }}>$21.99</Body>
+          <Body style={{ fontWeight: "600" }}>${total}</Body>
         </View>
       </View>
-      <PrimaryButton
-        label="Place Order"
-        onPress={() => navigation.navigate("OrderConfirmation")}
-      />
+      <PrimaryButton label="Place Order" onPress={placeOrder} />
+      {isLoading && <LoadingScreen translucent />}
     </ScrollView>
   );
 };
@@ -99,5 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: 16,
+    position: "relative",
   },
 });

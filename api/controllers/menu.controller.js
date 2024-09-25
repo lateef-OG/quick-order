@@ -9,13 +9,15 @@ const getMenus = async (req, res) => {
   }
 }
 
-const getMenu = async (req, res) => {
+const getMenu = async (req, res, next) => {
   try {
     const menu = await MenuService.getMenu({ id: req.params.id });
     if (menu) {
       res.status(200).json({ data: menu });
     } else {
-      res.status(404).json({ message: "Item doesn't exist" });
+      const error = new Error("Restaurant with provided id doesn't exist");
+      error.status = 404;
+      next(error);
     }
   } catch (error) {
     console.log(error);

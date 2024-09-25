@@ -2,7 +2,7 @@ import { StyleProp, StyleSheet, Text, TextStyle } from "react-native";
 import { colors } from "../../constants/colors";
 
 interface TextProps {
-  children: string;
+  children: string | React.ReactNode;
   style?: StyleProp<TextStyle>;
 }
 
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   caption: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontFamily: "Inter-Regular",
+    fontFamily: "Inter",
   },
 });

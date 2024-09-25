@@ -3,8 +3,11 @@ import { colors } from "../../constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Body, SubHeading } from "../../components/Typography/Typography";
 import { PrimaryButton } from "../../components/Buttons/Buttons";
+import { useOrders } from "../../hooks/useOrders";
 
 export const OrderConfirmation = ({ navigation }) => {
+  const { resetOrderValues } = useOrders();
+
   return (
     <View style={styles.container}>
       <AntDesign name="checkcircle" size={80} color={colors.green} />
@@ -17,7 +20,10 @@ export const OrderConfirmation = ({ navigation }) => {
       </Body>
       <PrimaryButton
         label="Got it!"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => {
+          navigation.navigate("Home");
+          resetOrderValues();
+        }}
       />
     </View>
   );

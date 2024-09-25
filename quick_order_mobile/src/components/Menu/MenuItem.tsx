@@ -2,14 +2,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { colors } from "../../constants/colors";
 import { Body, Caption } from "../../components/Typography/Typography";
+import { MenuItemType } from "../../types/menu.types";
+import { arrayToSentence } from "../../utils/helper";
 
 const FOOD_IMAGE_HEIGHT = 110;
 
 interface MenuItemProps {
   isLastItem: boolean;
+  item: MenuItemType;
+  addItem: () => void;
 }
 
-export const MenuItem = ({ isLastItem }: MenuItemProps) => {
+export const MenuItem = ({ isLastItem, item, addItem }: MenuItemProps) => {
+  const { name, description, price, ingredients, calories } = item;
   return (
     <View
       style={{
@@ -22,17 +27,27 @@ export const MenuItem = ({ isLastItem }: MenuItemProps) => {
       }}
     >
       <View style={{ flexShrink: 1 }}>
-        <Body style={{ marginBottom: 6 }}>Prep Meal</Body>
-        <Caption style={{ marginBottom: 4 }}>
-          This is a prep meal to make your meal preparation a lot easier.
+        <Body style={{ marginBottom: 6 }}>{name}</Body>
+        <Caption style={{ fontWeight: "500" }}>{description}</Caption>
+        <Caption style={{ marginVertical: 6 }}>
+          {arrayToSentence(ingredients)}
         </Caption>
-        <Caption>Onions, Fries, Rice, Meat, Corn, Oil.</Caption>
-        <Body style={{ fontFamily: "Inter-SemiBold", marginTop: "auto" }}>
-          $10.99
-        </Body>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: "auto",
+          }}
+        >
+          <Body style={{ fontWeight: "600" }}>{`$${price}`}</Body>
+          <Caption style={{ fontSize: 14, fontWeight: "600" }}>
+            {`contains ${calories} calories`}
+          </Caption>
+        </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.addContainer}>
+        <TouchableOpacity style={styles.addContainer} onPress={addItem}>
           <View
             style={{
               height: FOOD_IMAGE_HEIGHT * 0.7,

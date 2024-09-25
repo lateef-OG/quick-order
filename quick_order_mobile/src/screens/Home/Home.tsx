@@ -1,5 +1,5 @@
 import { View, Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types/navigation.types";
 import { StyleSheet } from "react-native";
@@ -13,6 +13,7 @@ const { width, height } = Dimensions.get("window");
 export const Home = () => {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { top, bottom } = useSafeAreaInsets();
+  const isFocused = useIsFocused();
 
   return (
     <View
@@ -22,7 +23,13 @@ export const Home = () => {
         <Heading>Your Culinary</Heading>
         <Heading style={styles.pageTitle}>Adventure Awaits</Heading>
         <View style={styles.cameraContainer}>
-          <QRScanner handleScan={({ data }) => navigate("Menu")} />
+          {isFocused && (
+            <QRScanner
+              handleScan={({ data }) => {
+                navigate("Menu", { id: data });
+              }}
+            />
+          )}
         </View>
         <SubHeading style={styles.instruction}>
           Scan the QR code to explore mouthwatering meal options and place your
