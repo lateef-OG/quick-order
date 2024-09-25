@@ -9,7 +9,7 @@
   "test": {
     "username": "postgres",
     "password": "admin",
-    "database": "database_test",
+    "database": "quickOrder",
     "host": "localhost",
     "dialect": "postgres"
   },

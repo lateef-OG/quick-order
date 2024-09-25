@@ -1,12 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const router = express.Router();
 const menuRouter = require('./routes/menu.route');
 const orderRouter = require('./routes/order.route');
 
 const app = express();
-const PORT = 5001;
 
 
 app.use(bodyParser.json());
@@ -33,6 +31,4 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`App is listening on port ${PORT}.`)
-})
+module.exports = app;
