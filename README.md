@@ -1,6 +1,8 @@
 # Quick Order
 A simple fullstack app that allows a user scan a QR code to view a menu then proceed to place an order.
 
+[![Coverage Status](https://coveralls.io/repos/github/lateef-OG/quick-order/badge.svg?branch=main)](https://coveralls.io/github/lateef-OG/quick-order?branch=main)
+
 ## Built with
 - [React Native](https://reactnative.dev/)
 - [Expo](https://docs.expo.dev/)
@@ -9,7 +11,7 @@ A simple fullstack app that allows a user scan a QR code to view a menu then pro
 - [PostgresSQL](https://postgresql.org)
 
 ### How to set up
-##### API
+#### API
 The API consists of the following endpoints.
 - GET: **api/menu/**
 List all menus.
@@ -56,7 +58,7 @@ To run tests and view test coverage, run the following command
 npm test
 ```
 
-##### Mobile application
+#### Mobile application
 
 ###### Installation
 
