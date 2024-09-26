@@ -84,9 +84,11 @@ if you don't already have [Expo Go](https://expo.dev/go) installed, following th
 **N.B** Ensure that your physical device and the server are on the same (wifi)network.
 
 ###### How to demo
-Below are some generated QR codes to test the app functionality
+
+Below are some generated QR codes to test the app functionality\
 ![Fast burgers](frame.png)
 ![Tina's kitchen](<frame (1).png>)
 ![Jollof corner](<frame (2).png>)
+
 ## Authors
 * **Lateef Ogunbadejo**
