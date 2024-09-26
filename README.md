@@ -81,5 +81,12 @@ To view the app on your physical device, scan the QR code displayed on your term
 For simulator/Emulator, Press `i` for iOS and `a` for Android.
 if you don't already have [Expo Go](https://expo.dev/go) installed, following the step above would prompt you to install.
 
+**N.B** Ensure that your physical device and the server are on the same (wifi)network.
+
+###### How to demo
+Below are some generated QR codes to test the app functionality
+![Fast burgers](frame.png)
+![Tina's kitchen](<frame (1).png>)
+![Jollof corner](<frame (2).png>)
 ## Authors
 * **Lateef Ogunbadejo**
